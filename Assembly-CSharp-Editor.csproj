@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\CreateAssetBundles.cs" />
      <Compile Include="Assets\Editor\GetAssetBundleNames.cs" />
+     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/UnityOLdVersion/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -104,6 +105,8 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{5700C871-7C67-4DA9-CAD4-C50D499C80FD}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{EFFD624B-D465-377D-BC26-48EB848B33D8}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>

@@ -4,36 +4,47 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
-public class AssetBundleLoader : MonoBehaviour {
-	
-	// Use this for initialization
-	void Start () {
 
-	}
-		
+interface IAssetBundleLoad{
+	Object[] GetObjectArrFromAssetBundle (string url, string ManifetFileName);
+	Object GetAssetBundleObject (string url, string name);
+	AssetBundleManifest GetAssetBundleManifest (string url, string ManifetFileName);
+}
 
-	public static GameObject[] GetAllObjectFromAssetBundle(string url, string ManifetFileName) {
+
+public class AssetBundleLoader : MonoBehaviour, IAssetBundleLoad {
+
+	public Object[] GetObjectArrFromAssetBundle(string url, string ManifetFileName) {
 		AssetBundleManifest manifest = GetAssetBundleManifest (url, ManifetFileName);
 		string[] names = manifest.GetAllAssetBundles();
-		GameObject[] obj = new GameObject[names.Length];
+		Object[] obj = new GameObject[names.Length];
 		for (int i = 0; i < names.Length; i++) {
-			obj [i] = GetAssetBundleObject (url + "/" + names[i], names [i]) as GameObject;
+			obj [i] = GetAssetBundleObject (url + "/" + names[i], names [i]);
 		}
 		return obj;
 	}
 		
-	public static Object GetAssetBundleObject(string url, string name) {
+	public Object GetAssetBundleObject(string url, string name){
 		WWW www = new WWW (url);
+		if(!string.IsNullOrEmpty(www.error)) {
+			throw new UnityException (www.error);
+		}
+		if(!www.assetBundle.Contains(name)) {
+			throw new UnityException ("AssetBundle is not contain " + name);
+		}
 		Object obj = www.assetBundle.LoadAsset (name);
 		www.assetBundle.Unload (false);
+		if(obj == null){
+			throw new UnityException ("AssetBundleObject is null");
+		}
 		return obj;
 	}
 
-	private static AssetBundleManifest GetAssetBundleManifest(string url, string ManifetFileName) {
-		AssetBundleManifest manifest = GetAssetBundleObject(url + "/" + ManifetFileName , "AssetBundleManifest") as AssetBundleManifest;
+	public AssetBundleManifest GetAssetBundleManifest(string url, string ManifetFileName) {
+		AssetBundleManifest manifest = null;
+		manifest = GetAssetBundleObject(url + "/" + ManifetFileName, "AssetBundleManifest") as AssetBundleManifest;
 		return manifest;
 	}
-
 }
 
 

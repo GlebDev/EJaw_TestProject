@@ -48,6 +48,10 @@
   <ItemGroup>
      <Compile Include="Assets\GameData\Scripts\AssetBundleLoader.cs" />
      <Compile Include="Assets\GameData\Scripts\CameraClicker.cs" />
+     <Compile Include="Assets\GameData\Scripts\GameArea.cs" />
+     <Compile Include="Assets\GameData\Scripts\IClickable.cs" />
+     <Compile Include="Assets\GameData\Scripts\PrimitiveFigure.cs" />
+     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/UnityOLdVersion/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -69,6 +73,10 @@
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/UnityOLdVersion/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{5700C871-7C67-4DA9-CAD4-C50D499C80FD}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
