@@ -13,23 +13,16 @@ public class CameraClicker : MonoBehaviour{
 			RaycastHit hit;
 			Physics.Raycast (ray, out hit);
 			if (hit.transform.GetComponent<IClickable>() != null) {
-				hit.transform.GetComponent<IClickable> ().Click (hit.point);
-				//Debug.Log (hit.point);
-				//Instantiate (PrimitiveFigureArr[Random.Range(0,PrimitiveFigureArr.Length)], hit.point, Quaternion.identity);
+				hit.transform.GetComponent<IClickable>().Click(hit);
+
+				//IClickable_Click(hit);
 			}
 		}
 	}
-
-	void OnMouseDown(){
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hit;
-		Physics.Raycast (ray, out hit);
-		Debug.Log (hit.point);
-		Debug.Log ("her");
-		if (hit.collider.gameObject == gameObject) {
-			Debug.Log (hit.point);
-			//Instantiate (PrimitiveFigureArr[Random.Range(0,PrimitiveFigureArr.Length)], hit.point, Quaternion.identity);
-		}
+	private void IClickable_Click(RaycastHit hit){
+		if (OnIClickableClick != null)
+			OnIClickableClick (hit);
 	}
-		
+
+	public System.Action<RaycastHit> OnIClickableClick;
 }

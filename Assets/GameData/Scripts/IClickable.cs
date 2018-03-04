@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 interface IClickable{
-	void Click (Vector3 clickPosition);
+	void Click (RaycastHit hit);
+	event System.Action <RaycastHit> OnClick;
 
 }

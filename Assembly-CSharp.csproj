@@ -48,8 +48,11 @@
   <ItemGroup>
      <Compile Include="Assets\GameData\Scripts\AssetBundleLoader.cs" />
      <Compile Include="Assets\GameData\Scripts\CameraClicker.cs" />
+     <Compile Include="Assets\GameData\Scripts\ClickColorData.cs" />
      <Compile Include="Assets\GameData\Scripts\GameArea.cs" />
+     <Compile Include="Assets\GameData\Scripts\GeometryObjectData.cs" />
      <Compile Include="Assets\GameData\Scripts\IClickable.cs" />
+     <Compile Include="Assets\GameData\Scripts\MainPresenter.cs" />
      <Compile Include="Assets\GameData\Scripts\PrimitiveFigure.cs" />
      <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">
