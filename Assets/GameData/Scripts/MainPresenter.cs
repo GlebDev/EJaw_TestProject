@@ -5,49 +5,65 @@ using System.Linq;
 
 public class MainPresenter : MonoBehaviour {
 
-	[SerializeField] private GeometryObjectData Admin;
-	[SerializeField] private string assetBoundleAddress;
+	[SerializeField] private string assetBoundleFilePath; //file://C:/Users/User1/Documents/UnityProjects/EJaw_TestProject/Assets/AssetBundles
 	[SerializeField] private GameArea gameArea;
-	[SerializeField] private GeometryObjectData geometryObjectDataManager;
 
-	private GameObject[] PrimitiveFigureArr = null;
-	private IAssetBundleLoad _AssetBundleManager = new AssetBundleLoader();
-	private List<PrimitiveFigure> FiguresList = new List<PrimitiveFigure> ();
+	private GameDataJson data;
+	private string[] allPrefbNames;
+	private GeometryObjectData geometryObjectDataManager;
+	private Object[] PrimitiveFigureArr ;
+	[SerializeField] private AssetBundleLoader _AssetBundleManager;
+	private int PrimitiveFigureTimerDelay;
+
 
 
 
 	// Use this for initialization
 	void Start () {
-		PrimitiveFigureArr = _AssetBundleManager.GetObjectArrFromAssetBundle (assetBoundleAddress, "AssetBundles") as GameObject[];
+		//PrimitiveFigureArr = _AssetBundleManager.GetObjectArrFromAssetBundle (assetBoundleFilePath, "AssetBundles") as GameObject[];
+		StartCoroutine(LoadAssetBundles());
+		geometryObjectDataManager = Resources.Load<GeometryObjectData>("ScriptableObject");
+		data = ResourcesLoader.LoadResourceTextfile ("Data");
+		allPrefbNames = data.PrefabNames;
 		gameArea.OnClick += GameArea_OnClick;
-		//i1.OnClick += I1_OnClick;
 	}
+
+
+	void GameArea_OnClick (RaycastHit hit){
+		if(PrimitiveFigureArr != null){
+			PrimitiveFigure figure = gameArea.СreateObject (PrimitiveFigureArr [Random.Range (0, PrimitiveFigureArr.Length)] as GameObject, hit.point).GetComponent<PrimitiveFigure>();
+			figure.name = allPrefbNames.FirstOrDefault(x => x == figure.objectType);
+			figure.filteredClickData = geometryObjectDataManager.ClicksData.Single (s => s.objectType == figure.objectType);
+			figure.OnClick += Figure_OnClick;
+			figure.OnStart += Figure_OnStart;
+		}
+	}
+
 
 	void Figure_OnClick (RaycastHit hit){
 		PrimitiveFigure curFigure = hit.transform.GetComponent<PrimitiveFigure> ();
 		curFigure.ClickCount++;
-
 		if (curFigure.ClickCount > curFigure.filteredClickData.minClicksCount && curFigure.ClickCount < curFigure.filteredClickData.maxClicksCount) {
 			curFigure.StopTimer ();
 			curFigure.color = curFigure.filteredClickData.color;
 		} else {
-			curFigure.StartTimer ();
+			if(!curFigure.IsTimerActive){
+				curFigure.StartTimer (curFigure.SetRandomColor, geometryObjectDataManager.ColorChangeTimerRepeatDelay);
+			}
 		}
 
 	}
 
-	void GameArea_OnClick (RaycastHit hit){
-		PrimitiveFigure figure = gameArea.СreateObject (PrimitiveFigureArr [Random.Range (0, PrimitiveFigureArr.Length)], hit.point).GetComponent<PrimitiveFigure>();
-		Debug.Log (figure.objectType);
-		FiguresList.Add(figure);
-		figure.OnClick += Figure_OnClick;
-		//Debug.Log (geometryObjectDataManager.ClicksData);//.Single (s => s.objectType == "capsule"));
-		figure.filteredClickData = geometryObjectDataManager.ClicksData.Single (s => s.objectType == figure.objectType);
+	void Figure_OnStart (PrimitiveFigure obj){
+		obj.StartTimer (obj.SetRandomColor, geometryObjectDataManager.ColorChangeTimerRepeatDelay);
 	}
 
-		
-	// Update is called once per frame
-	void Update () {
-		
+	IEnumerator LoadAssetBundles() {
+		AssetBundleLoader.CoroutineWithData cd = new AssetBundleLoader.CoroutineWithData(this, _AssetBundleManager.GetObjectArrFromAssetBundle(assetBoundleFilePath, "AssetBundles"));
+		yield return cd.coroutine;
+
+		PrimitiveFigureArr = cd.result as Object[];
 	}
+
+
 }

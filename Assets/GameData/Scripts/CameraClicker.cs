@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//file://C:/Users/User1/Documents/UnityProjects/EJaw_TestProject/AssetBundles
 
 public class CameraClicker : MonoBehaviour{
 	
@@ -14,8 +13,6 @@ public class CameraClicker : MonoBehaviour{
 			Physics.Raycast (ray, out hit);
 			if (hit.transform.GetComponent<IClickable>() != null) {
 				hit.transform.GetComponent<IClickable>().Click(hit);
-
-				//IClickable_Click(hit);
 			}
 		}
 	}

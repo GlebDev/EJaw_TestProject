@@ -29,3 +29,4 @@ C:\Users\User1\Documents\UnityProjects\EJaw_TestProject\Temp\bin\Debug\UnityEngi
 C:\Users\User1\Documents\UnityProjects\EJaw_TestProject\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Users\User1\Documents\UnityProjects\EJaw_TestProject\obj\Debug\Assembly-CSharp.dll
 C:\Users\User1\Documents\UnityProjects\EJaw_TestProject\obj\Debug\Assembly-CSharp.pdb
+C:\Users\User1\Documents\UnityProjects\EJaw_TestProject\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb

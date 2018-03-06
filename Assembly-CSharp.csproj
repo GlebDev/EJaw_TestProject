@@ -50,10 +50,12 @@
      <Compile Include="Assets\GameData\Scripts\CameraClicker.cs" />
      <Compile Include="Assets\GameData\Scripts\ClickColorData.cs" />
      <Compile Include="Assets\GameData\Scripts\GameArea.cs" />
+     <Compile Include="Assets\GameData\Scripts\GameDataJson.cs" />
      <Compile Include="Assets\GameData\Scripts\GeometryObjectData.cs" />
      <Compile Include="Assets\GameData\Scripts\IClickable.cs" />
      <Compile Include="Assets\GameData\Scripts\MainPresenter.cs" />
      <Compile Include="Assets\GameData\Scripts\PrimitiveFigure.cs" />
+     <Compile Include="Assets\GameData\Scripts\ResourcesLoader.cs" />
      <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/UnityOLdVersion/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -12,12 +12,7 @@ public class GameArea : MonoBehaviour, IClickable {
 			OnClick (hit);
 		}
 	}
-
-	// Use this for initialization
-	void Start () {
-		//PrimitiveFigureArr = _AssetBundleManager.GetObjectArrFromAssetBundle (assetBoundleAddress, "AssetBundles") as GameObject[];
-		//StartCoroutine (_AssetBundleManager.GetAssetBundleObject (assetBoundleAddress, "capsule",PrimitiveFigureArr[0] ));// as GameObject[];
-	}
+		
 
 	public GameObject СreateObject (GameObject new_object, Vector3 clickPosition){
 		return Instantiate (new_object, clickPosition, Quaternion.identity);

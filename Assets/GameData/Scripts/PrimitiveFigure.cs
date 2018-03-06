@@ -6,11 +6,13 @@ using UniRx;
 public class PrimitiveFigure : MonoBehaviour, IClickable {
 
 	public event System.Action<RaycastHit> OnClick;
+	public event System.Action<PrimitiveFigure> OnStart;
 
 	[SerializeField] private Renderer renderer;
 	[SerializeField] public string objectType;
-	[SerializeField] private int clickCount, colorChangeDelay = 1;
+	[SerializeField] private int clickCount ;
 	private CompositeDisposable disposables = new CompositeDisposable ();
+	private bool isTimerActive = true;
 
 	public Color color{
 		set{
@@ -28,43 +30,45 @@ public class PrimitiveFigure : MonoBehaviour, IClickable {
 			return clickCount;
 		}
 	}
-	public int ColorChangeDelay{
-		set{
-			colorChangeDelay = value;
-		}
+
+	public bool IsTimerActive{
 		get{
-			return colorChangeDelay;
+			return isTimerActive;
 		}
 	}
 
-	public ClickColorData filteredClickData;
+
+	public ClickColorData filteredClickData{get; set;}
 	
 	// Use this for initialization
 	void Start () {
-		disposables.Dispose ();
-		StartTimer ();
+		// call event OnStart
+		if (OnStart != null){
+			OnStart(this);
+		}
 	}
 		
 	public void Click (RaycastHit hit){
+		// call event OnClick
 		if (OnClick != null){
 			OnClick (hit);
 		}
 	}
 
-	public void StartTimer(){
-		if (disposables.IsDisposed) {
-			disposables = new CompositeDisposable ();
-			Observable.Timer (System.TimeSpan.FromSeconds (ColorChangeDelay))
-			.Repeat ()
-			.Subscribe (_ => { 
-				SetRandomColor ();
-			})
-			.AddTo (disposables);
-		}
+	public void StartTimer(System.Action TimerFunc, float repetitionDelay){
+		isTimerActive = true;
+		disposables = new CompositeDisposable ();
+		Observable.Timer (System.TimeSpan.FromSeconds (repetitionDelay))
+		.Repeat ()
+		.Subscribe (_ => { 
+			TimerFunc(); //Timer repeat this function every [repetitionDelay] seconds
+		})
+		.AddTo (disposables);
 		
 	}
 
 	public void StopTimer(){
+		isTimerActive = false;
 		disposables.Dispose ();
 	}
 
