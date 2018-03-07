@@ -9,8 +9,8 @@ public class PrimitiveFigure : MonoBehaviour, IClickable {
 	public event System.Action<PrimitiveFigure> OnStart;
 
 	[SerializeField] private Renderer renderer;
-	[SerializeField] public string objectType;
-	[SerializeField] private int clickCount ;
+	[SerializeField] private string objectType;
+	[SerializeField] private int clickCount;
 	private CompositeDisposable disposables = new CompositeDisposable ();
 	private bool isTimerActive = true;
 
@@ -31,6 +31,15 @@ public class PrimitiveFigure : MonoBehaviour, IClickable {
 		}
 	}
 
+	public string ObjectType{
+		set{
+			objectType = value;
+		}
+		get{
+			return objectType;
+		}
+	}
+
 	public bool IsTimerActive{
 		get{
 			return isTimerActive;
@@ -38,7 +47,7 @@ public class PrimitiveFigure : MonoBehaviour, IClickable {
 	}
 
 
-	public ClickColorData filteredClickData{get; set;}
+	public ClickColorData ClickData{get; set;}
 	
 	// Use this for initialization
 	void Start () {
